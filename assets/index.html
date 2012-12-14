@@ -1,0 +1,291 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/underscore-min.js"></script>
+<style>
+    .highlight {
+        background-color: #fff;
+        color: #000000 !important;
+    }
+
+    .item {
+        float: left;
+        margin: 5px;
+        padding: 5px;
+        min-width: 20px;
+        border: 1px solid #000;
+    }
+
+    .item-row {
+        margin-top: 5px;
+    }
+
+    .header {
+        height: auto;
+        background: #FFF;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .header ul {
+        list-style: none outside none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header ul li {
+        display: inline-block;
+        margin-left: 5px;
+        margin-top: 5px;
+        padding: 3px 5px;
+        background-color: #5C6F7D;
+    }
+
+    .header ul li a {
+        font-size: 12px;
+        font-weight: bold;
+        text-decoration: none;
+        line-height: 35px;
+        display: block;
+        color: #fff;
+        padding: 2px;
+    }
+
+    .header ul li a:hover {
+        text-decoration: underline;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .item-header {
+        border-bottom: 1px solid #5C6F7D;
+        background: #FFF;
+    }
+
+    #container {
+        clear: both;
+        border-top: 3px solid #5C6F7D;
+    }
+
+    .welcome_txt {
+        color: #000000;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 50px;
+    }
+</style>
+
+<script>
+
+    var Numeric = {};
+
+    /** To make it work outside android **/
+    if (PreferenceStore === undefined || PreferenceStore === null) {
+        var PreferenceStore = {
+            getPref:function () {
+                return null
+            }
+        };
+    }
+
+    $(document).ready(function () {
+        Numeric.container = $("#container");
+        Numeric.item_temp = _.template($('#item-template').html());
+        Numeric.row_temp = _.template($('#item-row').html());
+
+        Numeric["clear"] = function () {
+            this.container.html("");
+        }
+
+        Numeric["power_of_x"] = function () {
+            var options = {"x_pow_y_base":2, "x_pow_y_power_start":1, "x_pow_y_power_end":25};
+            var perf = JSON.parse(PreferenceStore.getPref("X_POW_Y"));
+            $.extend(options, perf);
+
+            var from = options["x_pow_y_power_start"];
+            var to = options["x_pow_y_power_end"];
+            var base = options["x_pow_y_base"];
+
+            this.clear();
+
+            while (from <= to) {
+                var item_id = from;
+                var header = base + "<sup><i>" + from + "</i></sup>";
+
+                var item_data = this.item_temp({ header:header, _id:from });
+                var row_data = this.row_temp({ row:Math.pow(base, from) });
+
+                this.container.append(item_data);
+                $("#" + item_id).append(row_data);
+
+                from++;
+            }
+        }
+
+        Numeric["square"] = function () {
+            var options = {"square_start":2, "square_end":25};
+            var perf = JSON.parse(PreferenceStore.getPref("SQUARE"));
+            $.extend(options, perf);
+
+            var from = options["square_start"];
+            var to = options["square_end"];
+            this.clear();
+
+            while (from <= to) {
+
+                var item_id = from;
+                var header = from + " x " + from;
+
+                var item_data = this.item_temp({ header:header, _id:from });
+                var row_data = this.row_temp({ row:from * from });
+
+                this.container.append(item_data);
+                $("#" + item_id).append(row_data);
+
+                from++;
+            }
+        }
+
+        Numeric["cube"] = function () {
+            var options = {"cube_start":2, "cube_end":25};
+            var perf = JSON.parse(PreferenceStore.getPref("CUBE"));
+            $.extend(options, perf);
+
+            var from = options["cube_start"];
+            var to = options["cube_end"];
+            this.clear();
+            while (from <= to) {
+
+                var item_id = from;
+                var header = from + " x " + from + " x " + from;
+
+                var item_data = this.item_temp({ header:header, _id:from });
+                var row_data = this.row_temp({ row:from * from * from });
+
+                this.container.append(item_data);
+                $("#" + item_id).append(row_data);
+
+                from++;
+            }
+        }
+
+        Numeric["percent_of_x_by_y"] = function () {
+
+            var options = {"percent_numerator":1, "percent_denominator_start":2, "percent_denominator_end":25};
+            var perf = JSON.parse(PreferenceStore.getPref("RATIO_PERCENT"));
+            $.extend(options, perf);
+
+            var numerator = options["percent_numerator"];
+
+            var from = options["percent_denominator_start"];
+            var to = options["percent_denominator_end"];
+
+            this.clear();
+            while (from <= to) {
+
+                var item_id = from;
+                var header = numerator + " / " + from;
+
+                var item_data = this.item_temp({ header:header, _id:from });
+                var row_data = this.row_temp({ row:(((numerator / from) * 100).toFixed(2)) + " % " });
+
+                this.container.append(item_data);
+                $("#" + item_id).append(row_data);
+
+                from++;
+            }
+        }
+
+        Numeric["multiplication_table"] = function () {
+
+            var options = {"multi_table_start":2, "multi_table_end":25, "multi_table_row_start":1, "multi_table_row_end":25};
+            var perf = JSON.parse(PreferenceStore.getPref("MULTIPLICATION_TABLE"));
+            $.extend(options, perf);
+
+            var from = options["multi_table_start"];
+            var to = options["multi_table_end"];
+
+            var depth_from = options["multi_table_row_start"];
+            var depth_to = options["multi_table_row_end"];
+
+            this.clear();
+            while (from <= to) {
+
+                var item_id = from;
+                var header = from;
+
+                var item_data = this.item_temp({ header:header, _id:from });
+
+                this.container.append(item_data);
+                var item = $("#" + item_id);
+
+
+                for (var i = depth_from; i <= depth_to; i++) {
+                    var row_data = this.row_temp({ row:from + " x " + i + " = " + from * i });
+                    item.append(row_data);
+                }
+
+                from++;
+            }
+        }
+
+
+        $(".header ul li a").click(function () {
+            $(".header ul li a").removeClass("highlight");
+            $(this).addClass("highlight");
+        });
+
+        $(".header").show();
+    });
+</script>
+</head>
+<body>
+<div>
+    <div class="header hide">
+        <ul>
+            <li>
+                <a href="javascript:Numeric.square();">Square</a>
+            </li>
+            <li>
+                <a href="javascript:Numeric.cube()">Cube</a>
+            </li>
+            <li>
+                <a href="javascript:Numeric.percent_of_x_by_y()"> % of X / Y</a>
+            </li>
+            <li>
+                <a href="javascript:Numeric.power_of_x()">Pow of X</a>
+            </li>
+            <li>
+                <a href="javascript:Numeric.multiplication_table()">Multiplication</a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="container">
+        <div class="welcome_txt">
+            Welcome to Numeric Common. Touch any of shown icons above, to proceed.
+            <br/><br/><br/>
+            You may also configure "Numeric Common" via settings.
+        </div>
+    </div>
+
+    <script type="text/template" id="item-template">
+        <div class="item" id="<%=_id%>">
+            <div class="item-header">
+                <%= header %>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="item-row">
+        <div class="item-row">
+            <%= row %>
+        </div>
+    </script>
+</div>
+</body>
+</html>

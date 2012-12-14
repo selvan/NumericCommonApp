@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    
+        <PreferenceCategory
+                android:title="X power Y">
+	        <EditTextPreference
+	                android:name="base value"
+	                android:summary="X value in 'X pow Y'"
+	                android:defaultValue="2"
+	                android:title="Base value"
+	                android:key="x_pow_y_base" />
+	        <EditTextPreference
+	                android:name="power starts from"
+	                android:summary="start value of Y in 'X pow Y'"
+	                android:defaultValue="2"
+	                android:title="Power starts from"
+	                android:key="x_pow_y_power_start" />
+	        <EditTextPreference
+	                android:name="power ends with"
+	                android:summary="end value of Y in 'X pow Y'"
+	                android:defaultValue="25"
+	                android:title="Power ends with"
+	                android:key="x_pow_y_power_end" />	        	        
+        </PreferenceCategory> 
+            
+        <PreferenceCategory
+                android:title="Square">
+	        <EditTextPreference
+	                android:name="starts from"
+	                android:summary="starting number of square sequence"
+	                android:defaultValue="2"
+	                android:title="Square starts from"
+	                android:numeric="integer"
+	                android:key="square_start" />
+	        <EditTextPreference
+	                android:name="ends with"
+	                android:summary="ending number of square sequence"
+	                android:defaultValue="25"
+	                android:title="Square ends with"
+	                android:numeric="integer"
+	                android:key="square_end" />	        
+        </PreferenceCategory>
+
+        <PreferenceCategory
+                android:title="Cube">
+	        <EditTextPreference
+	                android:name="starts from"
+	                android:summary="starting number of cube sequence"
+	                android:defaultValue="2"
+	                android:title="Cube starts from"
+	                android:key="cube_start" />
+	        <EditTextPreference
+	                android:name="ends with"
+	                android:summary="ending number of cube sequence"
+	                android:defaultValue="25"
+	                android:title="Cube ends with"
+	                android:key="cube_end" />	        
+        </PreferenceCategory>
+        
+        <PreferenceCategory
+                android:title="% of X / Y">
+	        <EditTextPreference
+	                android:name="numerator value"
+	                android:summary="X value in '% of X / Y'"
+	                android:defaultValue="1"
+	                android:title="Numerator value"
+	                android:key="percent_numerator" />
+	        <EditTextPreference
+	                android:name="denominator starts from"
+	                android:summary="start value of Y '% of X / Y'"
+	                android:defaultValue="2"
+	                android:title="Denominator starts from"
+	                android:key="percent_denominator_start" />
+	        <EditTextPreference
+	                android:name="denominator ends with"
+	                android:summary="end value of Y '% of X / Y'"
+	                android:defaultValue="25"
+	                android:title="Denominator ends with"
+	                android:key="percent_denominator_end" />	        	        
+        </PreferenceCategory>
+        
+        <PreferenceCategory
+                android:title="Multiplication table">
+	        <EditTextPreference
+	                android:name="Table starts from"
+	                android:summary="multiplication table start"
+	                android:defaultValue="2"
+	                android:title="Table starts from"
+	                android:key="multi_table_start" />
+	        <EditTextPreference
+	                android:name="Table ends with"
+	                android:summary="multiplication table end"
+	                android:defaultValue="25"
+	                android:title="Table ends with"
+	                android:key="multi_table_end" />
+	        <EditTextPreference
+	                android:name="Table row starts from"
+	                android:summary="multiplication table row start"
+	                android:defaultValue="2"
+	                android:title="Table row starts from"
+	                android:numeric="integer"
+	                android:key="multi_table_row_start" />
+	        <EditTextPreference
+	                android:name="Table row ends with"
+	                android:summary="multiplication table row end"
+	                android:defaultValue="25"
+	                android:title="Table row ends with"
+	                android:key="multi_table_row_end" />	        	        	        
+        </PreferenceCategory>         
+        
+
+</PreferenceScreen>
